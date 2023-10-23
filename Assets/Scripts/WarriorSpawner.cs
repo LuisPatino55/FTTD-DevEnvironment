@@ -47,10 +47,6 @@ public class WarriorSpawner : MonoBehaviour
     {
         Debug.Log("Warrior Spawner initialized");
     }
-    private void Start()
-    {
-        SpawnBaseWarriors();
-    }
 
     public void SpawnBaseWarriors()    
     {
