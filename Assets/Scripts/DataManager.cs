@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
     [Space(10)]
     public List<Warrior> ConfiguredOpponentWarriors = new();
+    [Space(10)]
+    public List<Warrior> StoreInventoryWarriors = new();
     [Space(10)]
     public Dictionary<string, int> battleHistory = new();
 
@@ -47,15 +50,30 @@ public class DataManager : MonoBehaviour
             Debug.Log("Key: " + kvp.Key + ", Value: " + kvp.Value);
         }
     }
+
     public void PrintStats(List<Warrior> holdingList)
     {
-        Debug.Log("Listing available warriors in:" + holdingList);
+        Debug.Log("Listing available warriors in: <color:blue>" + holdingList + "</color>.");
         foreach (Warrior war in holdingList)
         {
-            Debug.LogFormat("Warrior: {0}  female= {1}, Combat level: {2}" + "   Difficulty: " + war.warriorDifficulty + "   Health: " + war.maxHealth + "/" + war.maxStamina + " Accuracy: " + war.accuracySkill + "     Evasion: " + war.evasionSkill + "  ID: {3}", war.WarriorName, war.IsFemale, war.combatLevel, war.WarriorID);
+            Debug.LogFormat("Warrior: {0}  female= {1}, Combat level: {2}" + "   Difficulty: " + war.warriorDifficulty + "   Health: " + war.maxHealth + "/" 
+            + war.maxStamina + " Accuracy: " + war.accuracySkill + "     Evasion: " + war.evasionSkill + "  ID: {3}", war.WarriorName, war.IsFemale, war.combatLevel, war.WarriorID);
         }
-        // Debug.Log("Warriors vailable in the store: " + storeManager.warriorsForSale.Count);
-        Debug.Log("Opponet Warriors Available: " + ConfiguredOpponentWarriors.Count);
+        Debug.Log("Warriors Available: " + holdingList.Count);
+    }
+
+    public void PrintStats(List<Warrior> holdingList, WarriorDifficulty difficulty)
+    {
+        int i = 0;
+        Debug.Log("Listing available <color:red>" + difficulty + "</color> warriors in: <color:blue>" + holdingList + "</color>.");
+        foreach (Warrior war in holdingList)
+        {
+            while (war.warriorDifficulty == difficulty)
+            Debug.LogFormat("Warrior: {0}  female= {1}, Combat level: {2}" + "   Difficulty: " + war.warriorDifficulty + "   Health: " + war.maxHealth + "/" 
+            + war.maxStamina + " Accuracy: " + war.accuracySkill + "     Evasion: " + war.evasionSkill + "  ID: {3}", war.WarriorName, war.IsFemale, war.combatLevel, war.WarriorID);
+            i++;
+        }
+        Debug.Log("Warriors Available: " + i);
     }
 }
 

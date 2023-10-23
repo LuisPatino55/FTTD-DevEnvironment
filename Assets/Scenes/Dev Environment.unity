@@ -803,7 +803,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 460356945}
         m_TargetAssemblyTypeName: WarriorSpawner, Assembly-CSharp
-        m_MethodName: SpawnBaseWarriors
+        m_MethodName: SpawnOpponents
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -812,6 +812,30 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 111377559}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 193135844}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &111377564
 MonoBehaviour:
@@ -1186,7 +1210,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &193135845
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2744,6 +2768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a20c44b0b8ebcd4caaf1d51ceb9e502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingScreen: {fileID: 193135844}
   warriorNamesFemale:
   - Athena
   - Seraphia
@@ -2973,7 +2998,7 @@ MonoBehaviour:
   - Zeeka
   - The Nameless
   - Furious George
-  spawnGroup:
+  OpponentNPCGroup:
   - SpawnDifficulty: 5
     Females: 1
     SpawnNumber: 5
@@ -2996,11 +3021,11 @@ MonoBehaviour:
     IdPrefix: 3
   - SpawnDifficulty: 3
     Females: 0
-    SpawnNumber: 25
+    SpawnNumber: 20
     IdPrefix: 3
   - SpawnDifficulty: 2
     Females: 1
-    SpawnNumber: 35
+    SpawnNumber: 30
     IdPrefix: 2
   - SpawnDifficulty: 2
     Females: 0
@@ -3014,7 +3039,15 @@ MonoBehaviour:
     Females: 0
     SpawnNumber: 30
     IdPrefix: 1
-  warriorID: 100
+  StoreInventoryGroup:
+  - SpawnDifficulty: 1
+    Females: 1
+    SpawnNumber: 18
+    IdPrefix: 7
+  - SpawnDifficulty: 1
+    Females: 0
+    SpawnNumber: 16
+    IdPrefix: 7
 --- !u!1 &480879554
 GameObject:
   m_ObjectHideFlags: 0
@@ -4514,6 +4547,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ConfiguredOpponentWarriors: []
+  StoreInventoryWarriors: []
 --- !u!4 &756327525
 Transform:
   m_ObjectHideFlags: 0
@@ -6547,7 +6581,19 @@ MonoBehaviour:
   - itemTitle: Easy Warriors
     onValueChanged:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 756327523}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1094694335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10249,7 +10295,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 460356945}
+        m_TargetAssemblyTypeName: WarriorSpawner, Assembly-CSharp
+        m_MethodName: SpawnPlayers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1929804686}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 193135844}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1929804691
 MonoBehaviour:
   m_ObjectHideFlags: 0

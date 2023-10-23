@@ -13,7 +13,7 @@ public class WarriorSpawner : MonoBehaviour
         public int SpawnNumber;
         public int IdPrefix;
     }
-
+    [SerializeField] private GameObject loadingScreen;
     [SerializeField] private List<string> warriorNamesFemale = new()
     {
     "Athena", "Seraphia", "Isabella", "Aurora", "Freya","Luna", "Supernova", "Nightshade", "Cassia", "Selene", "Celeste", "Quinlan", "Rosalind",
@@ -39,30 +39,41 @@ public class WarriorSpawner : MonoBehaviour
     "Xotlopo", "Zeeka", "The Nameless", "Furious George", 
     };
     [Space(10)]
-    public SpawnGroup[] spawnGroup;
+    public SpawnGroup[] OpponentNPCGroup;
     [Space(10)]
-    [SerializeField] private int warriorID = 101;
+    public SpawnGroup[] StoreInventoryGroup;
+    private int warriorID = 100;
     
     private void Awake()
     {
         Debug.Log("Warrior Spawner initialized");
     }
 
-    public void SpawnBaseWarriors()    
+    public void SpawnOpponents()
     {
-        Debug.Log("Spawning opponent NPC warriors...");
+        SpawnWarriorGroup(OpponentNPCGroup, DataManager.Instance.ConfiguredOpponentWarriors);
+    }
+    public void SpawnPlayers()
+    {
+        SpawnWarriorGroup(StoreInventoryGroup, DataManager.Instance.StoreInventoryWarriors);
+    }
+
+    public void SpawnWarriorGroup(SpawnGroup[] spawnGroup, List<Warrior> holdingList)
+    {
+        Debug.Log("Spawning warrior group" + spawnGroup + "...");
         foreach (SpawnGroup group in spawnGroup)            // loops through all the predefined spawn structs
         {
             Debug.LogFormat("Begin spawing {0} {1} difficulty opponents. Female: {2}", group.SpawnNumber, group.SpawnDifficulty, group.Females);
             for (int i = 0; i < group.SpawnNumber; i++)     // iterates through spawn number for each struct group
             {
-                int setID = warriorID + group.IdPrefix;
-                SpawnWarrior(setID, group.Females, group.SpawnDifficulty, DataManager.Instance.ConfiguredOpponentWarriors);
+                int setID = (group.IdPrefix * 1000) + warriorID;
+                SpawnWarrior(setID, group.Females, group.SpawnDifficulty, holdingList);
                 warriorID++;
             }
         }
-        Debug.LogFormat("NPC warrior creation is now complete. Male names free: {0}     Female names free: {1}", warriorNamesMale.Count, warriorNamesFemale.Count);
-        DataManager.Instance.PrintStats(DataManager.Instance.ConfiguredOpponentWarriors);
+        Debug.LogFormat( spawnGroup + " warrior creation is now complete. Male names free: {0}     Female names free: {1}", warriorNamesMale.Count, warriorNamesFemale.Count);
+        DataManager.Instance.PrintStats(holdingList);
+        loadingScreen.SetActive(false);
     }
 
     public void SpawnWarrior(int id, bool female, WarriorDifficulty difficulty, List<Warrior> holdingList)
