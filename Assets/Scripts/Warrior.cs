@@ -3,24 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum WarriorDifficulty { Beast = 5, Elite = 4, Hard = 3, Medium = 2, Easy = 1 }
-public enum WarriorAttackStatus { Idle, Stunned, Attacking, Blocking, Evading, Dead }
+
 public class Warrior
 {
+    public int warriorID;
     public bool isFemale = false;
-    public bool isAttacking;
     public string warriorName = "";
-    public string warriorBio = "";
-
     public int experiencePoints = 0;
-    [Range(100, 10000)] public int expToNextLevel = 100;
-    [Range(1, 30)] public int combatLevel;
+    public int expToNextLevel = 100;
+    [Range(1, 35)] public int combatLevel;
 
-    [SerializeField][Range(100, 1000)] public int maxHealth = 100;
-    public int currentHealth;
-
+    [Range(100, 1000)] public int maxHealth = 100;
+    
     [Range(10, 100)] public float maxStamina = 20; // needed to attack or block, but not to evade
-    public float currentStamina;
-
+    
     [Range(1, 25)] public int strength = 1; // affects weapon base damage 1 = *0.1  10 = *1  25 = *2.5
 
     [Range(1, 25)] public int vitality = 1; // affects damage received 1 = *2.5  10 = *1  25 = *0.1
@@ -35,53 +31,45 @@ public class Warrior
 
     [Range(1, 100)] public float blockingSkill = 1; // chance to block partial or full damage
 
-    public float maxPanicPool;                               // panic level will affect attack cooldown, blocking, accuracy, evasion, and raise chance of stun 
-    public float currentPanic = 0;
-
     public int costToBuy;
     public int costToSell;
+    [Space(10)]
+    public WarriorDifficulty warriorDifficulty;
 
-    public float lastAttackTime;
-    public bool isRegening = false;
-    public bool isBleeding = false;
-
-    public WarriorDifficulty warriorDifficulty;             // Enums for diffiuclty and attacks
-    public WarriorAttackStatus attackStatus;
-
-    [Range(1, 100)] public float headDurability = 100;      // Body part durability or amputations
+    [Space(10)]                                     // present body parts
     public bool hasRightEye = true;
     public bool hasLeftEye = true;
+    public bool hasLeftArm = true;
+    public bool hasRightArm = true;
+    public bool hasLeftLeg = true;
+    public bool hasRightLeg = true;
+    [Space(10)]
+    [Range(1, 100)] public float headDurability = 100;      // Body part durability or amputations
     [Range(1, 100)] public float torsoDurability = 100;
     [Range(1, 100)] public float leftArmDurability = 100;
-    public bool hasLeftArm = true;
     [Range(1, 100)] public float rightArmDurability = 100;
-    public bool hasRightArm = true;
     [Range(1, 100)] public float leftLegDurability = 100;
-    public bool hasLeftLeg = true;
     [Range(1, 100)] public float rightLegDurability = 100;
-    public bool hasRightLeg = true;
-
+    [Space(10)]
     [Range(-10, 10)] public float ownerBond = 0;            // will give bonus + or - to healing body parts
     [Range(-10, 10)] public float ownerRespect = 0;         // will give bonus + or - to learning and stamina
-    [Range(-10, 10)] public float ownerAttraction = 0;      
-
+    [Range(-10, 10)] public float ownerAttraction = 0;
+    [Space(10)]
     public ArmorItem armorItemSlot = null;
-    public WeaponItem weaponItemSlot = null;
-    public WeaponItem shieldItemSlot = null;
+    public WeaponItem leftWeaponSlot = null;
+    public WeaponItem rightWeaponSlot = null;
+    [Space(10)]
     public ProfilePic ProfilePic = null;
-
+    [Space(10)]
     public Dictionary<string, int> battleHistory;
 
     // ===================================================================  Class constructor
-    public Warrior(string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy, string warriorBio = "Unknown History")
+    public Warrior(string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy)
     {
         battleHistory = new Dictionary<string, int>();
         this.warriorName = warriorName;
-        this.warriorBio = warriorBio;
         this.combatLevel = combatLevel;
         this.isFemale = isFemale;
-        currentHealth = maxHealth;
-        currentStamina = maxStamina;
         warriorDifficulty = difficulty;
         accuracySkill = UnityEngine.Random.Range(combatLevel * 2, combatLevel * 3);  //set Accuracy & evasion
         evasionSkill = UnityEngine.Random.Range(combatLevel * 2, combatLevel * 3);
@@ -116,11 +104,8 @@ public class Warrior
     }
     private void GainLevelEnd()
     {
-        maxPanicPool = 30 + (combatLevel * 2);
         maxHealth = (combatLevel * 15) + 100;
         maxStamina = (combatLevel * 3) + 20;
-        currentHealth = maxHealth;
-        currentStamina = maxStamina;
 
         switch (combatLevel)
         {
@@ -141,46 +126,8 @@ public class Warrior
             case 31: case 32: expToNextLevel = 400 * combatLevel; costToBuy = combatLevel * 400; break;
         }
         if (this.combatLevel >= 32) { expToNextLevel = 400 * combatLevel; }
-        Debug.LogFormat("{0}  female= {1}, Level: {2}  Difficulty: {3}  Health: {4}/{5}  Stamina: {6}/{7}  Accuracy: {8}  Evasion: {9}  STR: {10}  VIT: {11}  DEX: {12}  AGI: {13}  Cost to buy: {14} Next lvl: {15}",
-        warriorName, isFemale, combatLevel, warriorDifficulty, currentHealth, maxHealth, currentStamina, maxStamina, accuracySkill, evasionSkill, strength, vitality, dexterity, agility, costToBuy, expToNextLevel);
-    }
-
-
-
-
-    // ======================================================================================================================================== HP loss and gain
-    public void TakeDamage(int damageAmount)
-    {
-        if (currentPanic < maxPanicPool) { currentPanic = Mathf.Min(currentPanic += (damageAmount / 2), maxPanicPool); } // add 1/2 of dmg taken to the panic pool
-        currentHealth = Mathf.Max(currentHealth - damageAmount, 0); if (currentHealth <= 0) { Die(); }                  // take damage and death on 0 hp
-    }
-
-    public void BleedOut(int damageAmount, int statusDuration)                                                          // applies DOT hp reduction based on (damage amount per sec) (effect duration)
-    {
-        isBleeding = true;
-        for (float i = 0f; i < statusDuration; i += 1 * Time.deltaTime) {
-            if (currentPanic < maxPanicPool){ currentPanic++; }                                                         // adds 1 point panic per sec of DOT effect
-            currentHealth = Mathf.Max(currentHealth - damageAmount, 0);
-            if (currentHealth <= 0) { i = statusDuration; Die(); } }
-        isBleeding = false;
-    }
-    public void GainHealth(int healAmount)
-    {
-        currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
-    }
-    public void RegenHealth(int healAmount, int statusDuration)
-    {
-        isRegening = true;
-        for (float i = 0f; i < statusDuration; i += 1 * Time.deltaTime)
-        {
-            currentPanic--;
-            currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
-            if (currentHealth >= maxHealth)
-            {
-                i = statusDuration;
-            }
-        }
-        isRegening = false;
+        Debug.LogFormat("{0}  female= {1}, Level: {2}  Difficulty: {3}  Health: {4}  Stamina: {5}  Accuracy: {6}  Evasion: {7}  STR: {8}  VIT: {9}  DEX: {10}  AGI: {11}  Cost to buy: {12} Next lvl: {13}",
+        warriorName, isFemale, combatLevel, warriorDifficulty, maxHealth, maxStamina, accuracySkill, evasionSkill, strength, vitality, dexterity, agility, costToBuy, expToNextLevel);
     }
 
     //====================================================================================== Death 

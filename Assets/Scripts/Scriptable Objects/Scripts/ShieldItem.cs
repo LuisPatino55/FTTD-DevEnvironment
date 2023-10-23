@@ -9,7 +9,7 @@ public enum SpecialShieldAttack
 }
 
 [CreateAssetMenu(menuName = "F_TT_D/Items/ShieldItem")]
-public class ShieldItem : InventoryItem
+public class ShieldItem : InventoryItem, IDurable
 {
     [Range(10f, 100f)] public float shieldAbilityCooldown = 20f;
     [Range(0, 120)] public float abilityDuration = 0f;
@@ -17,6 +17,18 @@ public class ShieldItem : InventoryItem
     [Space(20)]
     public SpecialShieldAttack shieldAttack;
 
+    public float CurrentDurability { get; set; }
+    public float MaxDurability { get; set; }
+
+    public void ReduceDurability()
+    {
+
+    }
+
+    public void RepairDurability()
+    {
+
+    }
     public (int armor, SpecialShieldAttack ability, float cooldown, float duration) ShieldArmorRating(int vitality, int strength)
     {
         float duration = abilityDuration;           // ability buff duration (if any)

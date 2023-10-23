@@ -17,7 +17,7 @@ public enum SpecialWeaponAttack
 }
 [CreateAssetMenu(menuName = "F_TT_D/Items/WeaponItem")]
 
-public class WeaponItem : InventoryItem
+public class WeaponItem : InventoryItem, IDurable
 {
     [Range(0.1f, 10f)] public float attackCooldown = 1;
     [Range(1, 5)] public int criticalMultiplier = 1;
@@ -27,4 +27,17 @@ public class WeaponItem : InventoryItem
     public WeaponDamageType damageType;
     public SpecialWeaponAttack specialAttack;
     public WarriorDifficulty difficultyRequirement;
+
+    public float CurrentDurability { get; set; }
+    public float MaxDurability { get; set; }
+
+    public void ReduceDurability()
+    {
+
+    }
+
+    public void RepairDurability()
+    {
+
+    }
 }
