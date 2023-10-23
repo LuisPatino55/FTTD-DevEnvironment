@@ -1,22 +1,26 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum WarriorDifficulty { Beast = 5, Elite = 4, Hard = 3, Medium = 2, Easy = 1 }
 
+[Serializable]
 public class Warrior
 {
-    public int warriorID;
-    public bool isFemale = false;
-    public string warriorName = "";
+    public string WarriorName;
+    public int WarriorID { get; private set; }
+    public bool IsFemale { get; private set; }
+    [Space(10)]
+    public Image profilePic;
+    [Space(10)]
     public int experiencePoints = 0;
     public int expToNextLevel = 100;
     [Range(1, 35)] public int combatLevel;
-
+    [Space(10)]
     [Range(100, 1000)] public int maxHealth = 100;
     
     [Range(10, 100)] public float maxStamina = 20; // needed to attack or block, but not to evade
-    
+    [Space(10)]
     [Range(1, 25)] public int strength = 1; // affects weapon base damage 1 = *0.1  10 = *1  25 = *2.5
 
     [Range(1, 25)] public int vitality = 1; // affects damage received 1 = *2.5  10 = *1  25 = *0.1
@@ -24,18 +28,17 @@ public class Warrior
     [Range(1, 25)] public int dexterity = 1; // affects critical hit chance 1 = *0.1  10 = *1  25 = *2.5
 
     [Range(1, 25)] public int agility = 1; // affects chance to evade attack 1 = *0.1  10 = *1  25 = *2.5
-
+    [Space(10)]
     [Range(1, 100)] public float accuracySkill = 1; // governs chance of landing hits, duh ;) 
 
     [Range(1, 100)] public float evasionSkill = 1;  // governs chance of opposing attacks missing this warrior
 
     [Range(1, 100)] public float blockingSkill = 1; // chance to block partial or full damage
-
+    [Space(10)]
     public int costToBuy;
     public int costToSell;
     [Space(10)]
     public WarriorDifficulty warriorDifficulty;
-
     [Space(10)]                                     // present body parts
     public bool hasRightEye = true;
     public bool hasLeftEye = true;
@@ -51,25 +54,17 @@ public class Warrior
     [Range(1, 100)] public float leftLegDurability = 100;
     [Range(1, 100)] public float rightLegDurability = 100;
     [Space(10)]
-    [Range(-10, 10)] public float ownerBond = 0;            // will give bonus + or - to healing body parts
-    [Range(-10, 10)] public float ownerRespect = 0;         // will give bonus + or - to learning and stamina
-    [Range(-10, 10)] public float ownerAttraction = 0;
-    [Space(10)]
     public ArmorItem armorItemSlot = null;
     public WeaponItem leftWeaponSlot = null;
     public WeaponItem rightWeaponSlot = null;
-    [Space(10)]
-    public ProfilePic ProfilePic = null;
-    [Space(10)]
-    public Dictionary<string, int> battleHistory;
-
+  
     // ===================================================================  Class constructor
-    public Warrior(string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy)
+    public Warrior(int warriorID, string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy)
     {
-        battleHistory = new Dictionary<string, int>();
-        this.warriorName = warriorName;
+        WarriorID = warriorID;
+        WarriorName = warriorName;
         this.combatLevel = combatLevel;
-        this.isFemale = isFemale;
+        IsFemale = isFemale;
         warriorDifficulty = difficulty;
         accuracySkill = UnityEngine.Random.Range(combatLevel * 2, combatLevel * 3);  //set Accuracy & evasion
         evasionSkill = UnityEngine.Random.Range(combatLevel * 2, combatLevel * 3);
@@ -78,18 +73,16 @@ public class Warrior
         { switch (UnityEngine.Random.Range(0, 4))
             { case 0: strength++; break; case 1: vitality++; break; case 2: dexterity++; break; case 3: agility++; break; }
         }
-
-        Debug.LogFormat("New warrior spawned: {0}  female= {1}, Level: {2}", this.warriorName, this.isFemale, this.combatLevel);
+        Debug.LogFormat("New warrior spawned: {0}  female= {1}, Level: {2}", this.WarriorName, this.IsFemale, this.combatLevel);
         GainLevelEnd();
     }
 
     // ========================================================================== Level Up
     public void GainLevel()
     {
-        combatLevel++;
-
         if (combatLevel <= 34)
         {
+            combatLevel++;
             for (int i = 0; i < 3; i++)
             { 
                 switch (UnityEngine.Random.Range(0, 4)) { 
@@ -98,8 +91,9 @@ public class Warrior
                     case 2: dexterity++; break; 
                     case 3: agility++; break; }
             }
-        } else { return; }
-        Debug.LogFormat("{0} gained a level! Level: {1}", warriorName, combatLevel);
+        } 
+        else { return; }
+        Debug.LogFormat("{0} gained a level! Level: {1}", WarriorName, combatLevel);
         GainLevelEnd();
     }
     private void GainLevelEnd()
@@ -127,38 +121,15 @@ public class Warrior
         }
         if (this.combatLevel >= 32) { expToNextLevel = 400 * combatLevel; }
         Debug.LogFormat("{0}  female= {1}, Level: {2}  Difficulty: {3}  Health: {4}  Stamina: {5}  Accuracy: {6}  Evasion: {7}  STR: {8}  VIT: {9}  DEX: {10}  AGI: {11}  Cost to buy: {12} Next lvl: {13}",
-        warriorName, isFemale, combatLevel, warriorDifficulty, maxHealth, maxStamina, accuracySkill, evasionSkill, strength, vitality, dexterity, agility, costToBuy, expToNextLevel);
+        WarriorName, IsFemale, combatLevel, warriorDifficulty, maxHealth, maxStamina, accuracySkill, evasionSkill, strength, vitality, dexterity, agility, costToBuy, expToNextLevel);
     }
+}
 
-    //====================================================================================== Death 
-    private void Die()
-    {
-        Debug.Log(warriorName + "is dead.");
-    }
+public class PlayerWarrior : Warrior
+{
+    [Range(-10, 10)] public float ownerBond = 0;            // will give bonus + or - to healing body parts
+    [Range(-10, 10)] public float ownerRespect = 0;         // will give bonus + or - to learning and stamina
+    [Range(-10, 10)] public float ownerAttraction = 0;
+    public PlayerWarrior(int warriorID, string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy) : base(warriorID, warriorName, isFemale, combatLevel, difficulty) { }
 
-    // ======================================================================================== Battle History 
-
-    public void AddToBattleHistory(string key, int value)   // Battle History addition 
-    {
-        battleHistory[key] = value;
-    }
-
-    public int GetValueForBattleHistory(string key)
-    {
-        if (battleHistory.TryGetValue(key, out int value))
-        {
-            return value;
-        }
-        else
-        {
-            return -1; // or any other appropriate default value
-        }
-    }
-    public void PrintBattleHistory()        // Print the Battle History to the console
-    {
-        foreach (var kvp in battleHistory)
-        {
-            Debug.Log("Key: " + kvp.Key + ", Value: " + kvp.Value);
-        }
-    }
 }
