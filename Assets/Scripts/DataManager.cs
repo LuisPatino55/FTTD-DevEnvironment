@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class DataManager : MonoBehaviour
 {
@@ -43,7 +42,7 @@ public class DataManager : MonoBehaviour
             return -1; // or any other appropriate default value
         }
     }
-    public void PrintBattleHistory()        // Print the Battle History to the console
+    public void PrintBattleHistory()                                                // Print the Battle History to the console
     {
         foreach (var kvp in battleHistory)
         {
@@ -51,7 +50,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void PrintStats(List<Warrior> holdingList)
+    public void PrintStats(List<Warrior> holdingList)                               // prints full roster on list 
     {
         Debug.Log("Listing available warriors in: <color:blue>" + holdingList + "</color>.");
         foreach (Warrior war in holdingList)
@@ -62,18 +61,27 @@ public class DataManager : MonoBehaviour
         Debug.Log("Warriors Available: " + holdingList.Count);
     }
 
-    public void PrintStats(List<Warrior> holdingList, WarriorDifficulty difficulty)
+    public void PrintStats(List<Warrior> holdingList, WarriorDifficulty difficulty) // filters out selected difficulty and prints roster
     {
         int i = 0;
         Debug.Log("Listing available <color:red>" + difficulty + "</color> warriors in: <color:blue>" + holdingList + "</color>.");
         foreach (Warrior war in holdingList)
         {
-            while (war.warriorDifficulty == difficulty)
-            Debug.LogFormat("Warrior: {0}  female= {1}, Combat level: {2}" + "   Difficulty: " + war.warriorDifficulty + "   Health: " + war.maxHealth + "/" 
-            + war.maxStamina + " Accuracy: " + war.accuracySkill + "     Evasion: " + war.evasionSkill + "  ID: {3}", war.WarriorName, war.IsFemale, war.combatLevel, war.WarriorID);
-            i++;
+            if(war.warriorDifficulty == difficulty)
+            {
+                Debug.LogFormat("Warrior: {0}  female= {1}, Combat level: {2}" + "   Difficulty: " + war.warriorDifficulty + "   Health: " + war.maxHealth + "/"
+                + war.maxStamina + " Accuracy: " + war.accuracySkill + "     Evasion: " + war.evasionSkill + "  ID: {3}", war.WarriorName, war.IsFemale, war.combatLevel, war.WarriorID);
+                i++;
+            }
         }
         Debug.Log("Warriors Available: " + i);
+    }
+
+    public void PrintOpponentList(int difficulty)                                   // used for the UI difficulty selector
+    {
+        WarriorDifficulty Difficulty = (WarriorDifficulty)difficulty;
+        Debug.Log("Printing opponet warrior roster. Difficulty: " + Difficulty);
+        PrintStats(ConfiguredOpponentWarriors, Difficulty);
     }
 }
 

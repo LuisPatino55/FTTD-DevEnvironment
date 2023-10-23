@@ -6551,10 +6551,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd9f0db1bab82342b807fa026af05bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultIndex: 4
+  defaultIndex: 0
   invokeAtStart: 0
   invertAnimation: 0
-  loopSelection: 0
+  loopSelection: 1
   index: 0
   saveValue: 0
   selectorTag: Tag Text
@@ -6562,34 +6562,82 @@ MonoBehaviour:
   indicatorParent: {fileID: 1294627415}
   indicatorObject: {fileID: 1375233620713452, guid: b40bc0efc970f704281d2cb8ce808d25, type: 3}
   itemList:
-  - itemTitle: Beast Warriors
-    onValueChanged:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemTitle: Elite Warriors
-    onValueChanged:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemTitle: Hard Warriors
-    onValueChanged:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemTitle: Medium Warriors
-    onValueChanged:
-      m_PersistentCalls:
-        m_Calls: []
-  - itemTitle: Easy Warriors
+  - itemTitle: 'Level: Easy'
     onValueChanged:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 756327523}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 0
+        - m_Target: {fileID: 756327524}
+          m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+          m_MethodName: PrintOpponentList
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - itemTitle: 'Level: Medium'
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 756327524}
+          m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+          m_MethodName: PrintOpponentList
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - itemTitle: 'Level: Hard'
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 756327524}
+          m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+          m_MethodName: PrintOpponentList
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 3
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - itemTitle: 'Level: Elite'
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 756327524}
+          m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+          m_MethodName: PrintOpponentList
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 4
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - itemTitle: 'Level: Beast'
+    onValueChanged:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 756327524}
+          m_TargetAssemblyTypeName: DataManager, Assembly-CSharp
+          m_MethodName: PrintOpponentList
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 5
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
