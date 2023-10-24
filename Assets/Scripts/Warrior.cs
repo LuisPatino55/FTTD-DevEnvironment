@@ -127,14 +127,3 @@ public class Warrior
         WarriorName, IsFemale, combatLevel, warriorDifficulty, maxHealth, maxStamina, accuracySkill, evasionSkill, strength, vitality, dexterity, agility, costToBuy, expToNextLevel);
     }
 }
-[Serializable]
-public class PlayerWarrior : Warrior
-{
-    [Range(-10, 10)] public int ownerRespect = 0;
-    [Range(0, 100)] public int ownerLoyalty = 0;
-    [Range(0, 100)] public int ownerAffection = 0;
-
-    public PlayerWarrior(int warriorID, string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy) : base(warriorID, warriorName, isFemale, combatLevel, difficulty)
-    {
-    }
-}
