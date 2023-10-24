@@ -44,6 +44,7 @@ public class WarriorSpawner : MonoBehaviour
     public SpawnGroup[] StoreInventoryGroup;
     private int warriorID = 100;
     
+    public DevScreenUI devScreenUI;
     private void Awake()
     {
         Debug.Log("Warrior Spawner initialized");
@@ -72,7 +73,7 @@ public class WarriorSpawner : MonoBehaviour
             }
         }
         Debug.LogFormat( spawnGroup + " warrior creation is now complete. Male names free: {0}     Female names free: {1}", warriorNamesMale.Count, warriorNamesFemale.Count);
-        DataManager.Instance.PrintStats(holdingList);
+        devScreenUI.PrintStats(holdingList);
         loadingScreen.SetActive(false);
     }
 
