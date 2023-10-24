@@ -52,14 +52,14 @@ public class WarriorSpawner : MonoBehaviour
 
     public void SpawnOpponents()
     {
-        SpawnWarriorGroup(OpponentNPCGroup, DataManager.Instance.ConfiguredOpponentWarriors);
+        SpawnWarriorGroup(OpponentNPCGroup);
     }
     public void SpawnPlayers()
     {
-        SpawnWarriorGroup(StoreInventoryGroup, DataManager.Instance.StoreInventoryWarriors);
+        SpawnWarriorGroup(StoreInventoryGroup);
     }
 
-    public void SpawnWarriorGroup(SpawnGroup[] spawnGroup, List<Warrior> holdingList)
+    public void SpawnWarriorGroup(SpawnGroup[] spawnGroup)
     {
         Debug.Log("Spawning warrior group" + spawnGroup + "...");
         foreach (SpawnGroup group in spawnGroup)            // loops through all the predefined spawn structs
@@ -68,16 +68,14 @@ public class WarriorSpawner : MonoBehaviour
             for (int i = 0; i < group.SpawnNumber; i++)     // iterates through spawn number for each struct group
             {
                 int setID = (group.IdPrefix * 1000) + warriorID;
-                SpawnWarrior(setID, group.Females, group.SpawnDifficulty, holdingList);
+                SpawnWarrior(setID, group.Females, group.SpawnDifficulty);
                 warriorID++;
             }
         }
         Debug.LogFormat( spawnGroup + " warrior creation is now complete. Male names free: {0}     Female names free: {1}", warriorNamesMale.Count, warriorNamesFemale.Count);
-        devScreenUI.PrintStats(holdingList);
-        loadingScreen.SetActive(false);
     }
 
-    public void SpawnWarrior(int id, bool female, WarriorDifficulty difficulty, List<Warrior> holdingList)
+    public void SpawnWarrior(int id, bool female, WarriorDifficulty difficulty)
     {
         string name;        // will hold random name we grab from names list
         int index;          // will hold index of name we grab
@@ -104,11 +102,11 @@ public class WarriorSpawner : MonoBehaviour
         else { warLevel = 1; }
 
         //Spawn warrior with all parameters above and add to the configured list
-        if (holdingList == DataManager.Instance.StoreInventoryWarriors)
+        if (id >= 7000)
         {
-            holdingList.Add(new PlayerWarrior(id, name, female, warLevel, difficulty));
+            DataManager.Instance.StoreInventoryWarriors.Add(new Warrior(id, name, female, warLevel, difficulty));
         }
-        else holdingList.Add(new Warrior(id, name, female, warLevel, difficulty));
-        Debug.LogFormat("generating warrior: {0}, female: {1}, Level: {2}, Difficulty: {3}  ID: {4}  To list: {5}", name, female, warLevel, difficulty, id, holdingList);
+        else DataManager.Instance.ConfiguredOpponentWarriors.Add(new Warrior(id, name, female, warLevel, difficulty));
+        Debug.LogFormat("generating warrior: {0}, female: {1}, Level: {2}, Difficulty: {3}  ID: {4} ", name, female, warLevel, difficulty, id);
     }
 }

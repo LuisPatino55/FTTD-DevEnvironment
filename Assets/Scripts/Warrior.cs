@@ -1,17 +1,15 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
+[Serializable]
 public enum WarriorDifficulty { Beast = 5, Elite = 4, Hard = 3, Medium = 2, Easy = 1 }
 
 [Serializable]
 public class Warrior
 {
     public string WarriorName;
-    public int WarriorID { get; private set; }
-    public bool IsFemale { get; private set; }
-    [Space(10)]
-    public Image profilePic;
+    public int WarriorID { get; set; }
+    public bool IsFemale { get; set; }
     [Space(10)]
     public int experiencePoints = 0;
     public int expToNextLevel = 100;
@@ -53,12 +51,17 @@ public class Warrior
     [Range(1, 100)] public float rightArmDurability = 100;
     [Range(1, 100)] public float leftLegDurability = 100;
     [Range(1, 100)] public float rightLegDurability = 100;
-    [Space(10)]
+
     public ArmorItem armorItemSlot = null;
     public WeaponItem leftWeaponSlot = null;
     public WeaponItem rightWeaponSlot = null;
-  
+
     // ===================================================================  Class constructor
+    public Warrior()
+    {
+        // Parameterless constructor
+    }
+
     public Warrior(int warriorID, string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy)
     {
         WarriorID = warriorID;
@@ -124,12 +127,14 @@ public class Warrior
         WarriorName, IsFemale, combatLevel, warriorDifficulty, maxHealth, maxStamina, accuracySkill, evasionSkill, strength, vitality, dexterity, agility, costToBuy, expToNextLevel);
     }
 }
-
+[Serializable]
 public class PlayerWarrior : Warrior
 {
-    [Range(-10, 10)] public float ownerBond = 0;            // will give bonus + or - to healing body parts
-    [Range(-10, 10)] public float ownerRespect = 0;         // will give bonus + or - to learning and stamina
-    [Range(-10, 10)] public float ownerAttraction = 0;
-    public PlayerWarrior(int warriorID, string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy) : base(warriorID, warriorName, isFemale, combatLevel, difficulty) { }
+    [Range(-10, 10)] public int ownerRespect = 0;
+    [Range(0, 100)] public int ownerLoyalty = 0;
+    [Range(0, 100)] public int ownerAffection = 0;
 
+    public PlayerWarrior(int warriorID, string warriorName = "Generic Bro", bool isFemale = false, int combatLevel = 1, WarriorDifficulty difficulty = WarriorDifficulty.Easy) : base(warriorID, warriorName, isFemale, combatLevel, difficulty)
+    {
+    }
 }
