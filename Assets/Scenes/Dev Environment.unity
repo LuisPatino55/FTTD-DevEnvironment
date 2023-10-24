@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 93164089}
   - component: {fileID: 93164091}
   - component: {fileID: 93164090}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Warrior List Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -533,16 +533,16 @@ RectTransform:
   m_GameObject: {fileID: 93164088}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 120314.69}
-  m_LocalScale: {x: 108, y: 108, z: 108}
+  m_LocalScale: {x: 108, y: 99.9, z: 108}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1094694333}
   m_Father: {fileID: 207816363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -695.9516, y: -24.039429}
-  m_SizeDelta: {x: -1915.1348, y: -1070.4631}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 264.0484, y: -60}
+  m_SizeDelta: {x: 4.8652344, y: 9.536865}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &93164090
 MonoBehaviour:
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16078432, g: 0.39215687, b: 0.5294118, a: 0.95686275}
+  m_Color: {r: 0.16078432, g: 0.39215687, b: 0.5294118, a: 0.43137255}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1244,7 +1244,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 1c863efcf4f8939459a0b2df40b413fe, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -6536,7 +6536,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.07270241, y: 4.3800125}
+  m_AnchoredPosition: {x: -0.07269287, y: 4.95}
   m_SizeDelta: {x: 350, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1094694334
