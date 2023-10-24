@@ -25,8 +25,6 @@ public class DataManager : MonoBehaviour
     public List<Warrior> PlayerBarracks = new();
     [Space(10)]
     public List<Warrior> DeadWarriors = new();
-    [Space(10)]
-    public Warrior[] ArenaWarriors = new Warrior[2];
 
     // key will be the warrior ID, value will be a list of battle history
     public Dictionary<int, List<BattleHistory>> battleHistory = new();
@@ -58,18 +56,18 @@ public class DataManager : MonoBehaviour
                 Debug.Log("Error: WarriorList not found");
                 break;
         }
-
     }
-    public void HistoryEnrty(int id, Warrior opponent)
+
+    public void HistoryEnrty(int id, Warrior opponent, bool win)
     {
-        BattleHistory historyEntry = new();
-        historyEntry.OpponentName = opponent.WarriorName;
-        historyEntry.OpponentID = opponent.WarriorID;
-        historyEntry.OpponentLevel = opponent.combatLevel;
-        historyEntry.Win = true;
+        BattleHistory historyEntry = new()
+        {
+            OpponentName = opponent.WarriorName,
+            OpponentID = opponent.WarriorID,
+            OpponentLevel = opponent.combatLevel,
+            Win = win
+        };
         battleHistory[id].Add(historyEntry);
     }
-
-
 }
 

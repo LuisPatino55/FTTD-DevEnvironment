@@ -103,8 +103,12 @@ public class WarriorSpawner : MonoBehaviour
         else if (difficulty == WarriorDifficulty.Easy) { warLevel = Random.Range(2, 8); }
         else { warLevel = 1; }
 
-        //Spawn warrior with all parameters above and add to the configured list 
-        holdingList.Add(new Warrior(id, name, female, warLevel, difficulty));
+        //Spawn warrior with all parameters above and add to the configured list
+        if (holdingList == DataManager.Instance.StoreInventoryWarriors)
+        {
+            holdingList.Add(new PlayerWarrior(id, name, female, warLevel, difficulty));
+        }
+        else holdingList.Add(new Warrior(id, name, female, warLevel, difficulty));
         Debug.LogFormat("generating warrior: {0}, female: {1}, Level: {2}, Difficulty: {3}  ID: {4}  To list: {5}", name, female, warLevel, difficulty, id, holdingList);
     }
 }
